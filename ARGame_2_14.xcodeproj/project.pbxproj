@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		F7ECD6AB245EC3A9005A7B12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7ECD6A9245EC3A9005A7B12 /* Main.storyboard */; };
 		F7ECD6AD245EC3AA005A7B12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7ECD6AC245EC3AA005A7B12 /* Assets.xcassets */; };
 		F7ECD6B0245EC3AA005A7B12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7ECD6AE245EC3AA005A7B12 /* LaunchScreen.storyboard */; };
+		F7ED2140245F3C1A005A8E1D /* BoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ED213F245F3C1A005A8E1D /* BoxModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		F7ECD6AC245EC3AA005A7B12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7ECD6AF245EC3AA005A7B12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F7ECD6B1245EC3AA005A7B12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F7ED213F245F3C1A005A8E1D /* BoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				F7ECD6A3245EC3A9005A7B12 /* AppDelegate.swift */,
 				F7ECD6A5245EC3A9005A7B12 /* art.scnassets */,
 				F7ECD6A7245EC3A9005A7B12 /* ViewController.swift */,
+				F7ED213F245F3C1A005A8E1D /* BoxModel.swift */,
 				F7ECD6A9245EC3A9005A7B12 /* Main.storyboard */,
 				F7ECD6AC245EC3AA005A7B12 /* Assets.xcassets */,
 				F7ECD6AE245EC3AA005A7B12 /* LaunchScreen.storyboard */,
@@ -103,7 +106,7 @@
 				};
 			};
 			buildConfigurationList = F7ECD69B245EC3A9005A7B12 /* Build configuration list for PBXProject "ARGame_2_14" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.4";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -141,6 +144,7 @@
 			files = (
 				F7ECD6A8245EC3A9005A7B12 /* ViewController.swift in Sources */,
 				F7ECD6A4245EC3A9005A7B12 /* AppDelegate.swift in Sources */,
+				F7ED2140245F3C1A005A8E1D /* BoxModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +289,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9H4ZLWV74V;
 				INFOPLIST_FILE = ARGame_2_14/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -302,6 +307,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9H4ZLWV74V;
 				INFOPLIST_FILE = ARGame_2_14/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

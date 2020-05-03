@@ -13,6 +13,7 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    private let boxModel = BoxModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,11 +24,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+//        // Create a new scene
+//        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+//
+//        // Set the scene to the view
+//        sceneView.scene = scene
         
-        // Set the scene to the view
-        sceneView.scene = scene
+        let boxes = boxModel.generateBoxes(boxesCount: 100)
+        
+        for box in boxes {
+            sceneView.scene.rootNode.addChildNode(box)
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
