@@ -14,7 +14,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     private let boxModel = BoxModel()
-    private let colorRange = [0: #colorLiteral(red: 1, green: 0.9598860748, blue: 0.4043213171, alpha: 0.9), 1: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 0.9), 2: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 0.9), 3: #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 0.9), 4: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 0.9), 5: #colorLiteral(red: 0.6067150242, green: 1, blue: 0.9936729992, alpha: 0.9)]
+    private let colorRange = [0: #colorLiteral(red: 1, green: 0.9598860748, blue: 0.4043213171, alpha: 0.95), 1: #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 0.95), 2: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 0.95), 3: #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 0.95), 4: #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 0.95), 5: #colorLiteral(red: 0.6067150242, green: 1, blue: 0.9936729992, alpha: 0.95)]
+    private var sphereNode: SCNNode? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,17 +41,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         panel.frame = CGRect(x: 0.0, y: view.frame.height - h, width: view.frame.width, height: h)
         
         let offset = panel.frame.width / 7
+        let w = panel.frame.height / 2.5
         var buttonX = offset
         for i in 0..<colorRange.count {
             let button = UIButton()
-            let w = panel.frame.height / 4
             button.backgroundColor = colorRange[i]
             button.frame = CGRect(x: 0, y: 0, width: w, height: w)
             button.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             button.layer.position = CGPoint(x: buttonX, y: panel.frame.height / 2)
             button.layer.cornerRadius = button.frame.width / 2
             buttonX += offset
-            button.addTarget(self, action: #selector(buttonAction(sender: )), for: .touchUpInside)
+            button.addTarget(self, action: #selector(buttonAction(sender: )), for: .touchDown)
             
             panel.addSubview(button)
         }
@@ -59,14 +60,53 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @objc func buttonAction(sender: UIButton) {
-        let sphere = SCNSphere(radius: 0.05)
-        sphere.firstMaterial?.diffuse.contents =  sender.backgroundColor
+        if sphereNode != nil {
+            sphereNode?.removeFromParentNode()
+            sphereNode = nil
+        }
+        
+        if let color = sender.backgroundColor {
+            createSphere(color: color)
+        }
+    }
+    
+    private func createSphere(color: UIColor) {
+        let sphere = SCNSphere(radius: 0.03)
+        sphere.firstMaterial?.diffuse.contents = color
         sphere.firstMaterial?.isDoubleSided = true
         
-        let sphereNode = SCNNode(geometry: sphere)
-        sphereNode.position = SCNVector3(0, 0, -1)
+        sphereNode = SCNNode(geometry: sphere)
+        sphereNode!.position = SCNVector3(0, 0, -0.2)
+        sceneView.scene.rootNode.addChildNode(sphereNode!)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let position = touch.location(in: sceneView)
+            
+            if let intersectedNode = sceneView.hitTest(position, options: nil).first?.node, let sphereNode = sphereNode {
+                SCNTransaction.animationDuration = 1.0
+                sphereNode.position = intersectedNode.position
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                    self!.handleCollision(of: sphereNode, with: intersectedNode)
+                }
+            }
+        }
+    }
+    
+    func handleCollision(of sphere: SCNNode, with box: SCNNode) {
+        let sphereColor = sphere.geometry?.firstMaterial?.diffuse.contents as! UIColor
+        let boxColor = box.geometry?.firstMaterial?.diffuse.contents as! UIColor
         
-        sceneView.scene.rootNode.addChildNode(sphereNode)
+        if sphereColor == boxColor {
+            sphere.removeFromParentNode()
+            box.removeFromParentNode()
+            sphereNode = nil
+        } else {
+            sphere.removeFromParentNode()
+            sphereNode = nil
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
